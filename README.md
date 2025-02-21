@@ -1,40 +1,101 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# cloudflare-nextjs-node
 
-## Getting Started
 
-First, run the development server:
+A Cursor-powered AI development environment with advanced agentic capabilities.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+## Quick Start
+
+1. Activate the virtual environment:
+   ```bash
+   # On Windows
+   venv\Scripts\activate
+   
+   # On macOS/Linux
+   source venv/bin/activate
+   ```
+
+2. Configure your environment:
+   - Copy `.env.example` to `.env` if you haven't already
+   - Add your API keys in `.env` (optional)
+
+## Available Tools
+
+Your project includes several powerful tools in the `tools/` directory:
+
+### LLM Integration
+```python
+from tools.llm_api import query_llm
+
+# Use LLM for assistance
+response = query_llm(
+    "Your question here",
+    provider="anthropic"  # Options: openai, anthropic, azure_openai, deepseek, gemini
+)
+print(response)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Web Scraping
+```python
+from tools.web_scraper import scrape_urls
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+# Scrape web content
+results = scrape_urls(["https://example.com"], max_concurrent=3)
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Search Engine
+```python
+from tools.search_engine import search
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# Search the web
+results = search("your search keywords")
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+### Screenshot Verification
+```python
+from tools.screenshot_utils import take_screenshot_sync
+from tools.llm_api import query_llm
 
-To learn more about Next.js, take a look at the following resources:
+# Take and analyze screenshots
+screenshot_path = take_screenshot_sync('https://example.com', 'screenshot.png')
+analysis = query_llm(
+    "Describe this webpage",
+    provider="openai",
+    image_path=screenshot_path
+)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Note: When you first use the screenshot verification feature, Playwright browsers will be installed automatically.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## AI Assistant Configuration
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project uses `.cursorrules` to configure the AI assistant. The assistant can:
+- Help with coding tasks
+- Verify screenshots
+- Perform web searches
+- Analyze images and code
+
+
+## Environment Variables
+
+Configure these in your `.env` file:
+
+- `LLM_API_KEY`: Your LLM API key (optional)
+- `AZURE_OPENAI_API_KEY`: Azure OpenAI API key (optional)
+- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI endpoint (optional)
+- `AZURE_OPENAI_MODEL_DEPLOYMENT`: Azure OpenAI model deployment name (optional)
+
+Note: Basic functionality works without API keys. Advanced features (like multimodal analysis) require appropriate API keys.
+
+## Development Tools
+
+- `.devcontainer/`: VS Code development container configuration
+- `.vscode.example/`: Recommended VS Code settings
+- `.github/`: CI/CD workflows
+
+## License
+
+MIT License

@@ -1,0 +1,4 @@
+{
+  "python.defaultInterpreterPath": "./venv/bin/python",
+  "terminal.integrated.fontFamily": "MesloLGS NF"
+}
